@@ -1,9 +1,10 @@
 import './App.css';
+import Telainicial from './components/Telainicial';
 
 function App() {
   return (
     <div className="App">
-      <h2>Jogo de Palavras</h2>
+      <Telainicial />
     </div>
   );
 }
