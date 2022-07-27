@@ -15,8 +15,31 @@ function App() {
 
   const [gameStage, setGameStage] = useState(estagios[0].name);
   const [palavras] = useState(listaDePalavras);
+  const [pickedWord, setPickedWord] = useState("");
+  const [pickedCategory, setPickedcategory] = useState("");
+  const [letters, setLetters] = useState([]);
+
+
+  const sortPalavraEcategoria = () => {
+    const categorias = Object.keys(palavras);
+    const sortCategoria = categorias[Math.floor(Math.random() * categorias.length)]
+    console.log(sortCategoria);
+    const sortPalavra = palavras[sortCategoria][Math.floor(Math.random() * palavras[sortCategoria].length)]
+    console.log(sortPalavra);
+    return { sortCategoria, sortPalavra }
+  }
 
   const iniciarJogo = () => {
+    const { sortCategoria, sortPalavra } = sortPalavraEcategoria()
+    let letrasSeparadas = sortPalavra.split("");
+    letrasSeparadas = letrasSeparadas.map((l) => l.toLowerCase())
+    console.log(sortCategoria, sortPalavra);
+    console.log(letrasSeparadas);
+
+    setPickedWord(sortPalavra);
+    setPickedcategory(sortCategoria);
+    setLetters(letrasSeparadas);
+
     setGameStage(estagios[1].name)
   }
 
