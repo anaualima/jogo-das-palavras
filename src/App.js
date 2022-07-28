@@ -18,16 +18,18 @@ function App() {
   const [pickedWord, setPickedWord] = useState("");
   const [pickedCategory, setPickedcategory] = useState("");
   const [letters, setLetters] = useState([]);
+  const [guessedLetters, setGuessedLetters] = useState([]);
+  const [wrongLetter, setWrognLetters] = useState([]);
+  const [guesses, setGuesses] = useState(3);
+  const [score, setScore] = useState(0);
 
 
   const sortPalavraEcategoria = () => {
     const categorias = Object.keys(palavras);
     const sortCategoria = categorias[Math.floor(Math.random() * categorias.length)]
-    console.log(sortCategoria);
     const sortPalavra = palavras[sortCategoria][Math.floor(Math.random() * palavras[sortCategoria].length)]
-    console.log(sortPalavra);
     return { sortCategoria, sortPalavra }
-  }
+  };
 
   const iniciarJogo = () => {
     const { sortCategoria, sortPalavra } = sortPalavraEcategoria()
@@ -41,21 +43,60 @@ function App() {
     setLetters(letrasSeparadas);
 
     setGameStage(estagios[1].name)
+  };
+
+  const verificaLetra = (letter) => {
+    const normalizaLetra = letter.toLowerCase()
+    if (guessedLetters.includes(normalizaLetra) || wrongLetter.includes(normalizaLetra)) {
+      return;
+    };
+
+    if (letters.includes(normalizaLetra)) {
+      setGuessedLetters((actualGuessedLetters) => [
+        ...actualGuessedLetters,
+        normalizaLetra
+      ]);
+    } else {
+      setWrognLetters((actualGuessedLetters) => [
+        ...actualGuessedLetters,
+        normalizaLetra
+      ]);
+      setGuesses((actualGuesses) => actualGuesses - 1)
+    }
   }
 
-  const verificaLetra = () => {
-    setGameStage(estagios[2].name)
-  }
+  const apagaLetras = () => {
+    setGuessedLetters([]);
+    setWrognLetters([]);
+  };
+
+  useEffect(() => {
+    if (guesses <= 0) {
+      apagaLetras()
+      setGameStage(estagios[2].name)
+    }
+  }, [guesses]);
 
   const reiniciar = () => {
-    setGameStage(estagios[0].name)
-  }
+    setScore(0);
+    setGuesses(3);
+    setGameStage(estagios[0].name);
+  };
 
   return (
     <div className="App">
       {gameStage === "start" && <Telainicial iniciarJogo={iniciarJogo} />}
-      {gameStage === "game" && <Jogo verificaLetra={verificaLetra} />}
-      {gameStage === "end" && <GameOver reiniciar={reiniciar} />}
+      {gameStage === "game" && <Jogo
+        verificaLetra={verificaLetra}
+        pickedWord={pickedWord}
+        pickedCategory={pickedCategory}
+        letters={letters}
+        guessedLetters={guessedLetters}
+        wrongLetter={wrongLetter}
+        guesses={guesses}
+        score={score}
+      />}
+      {gameStage === "end" && <GameOver reiniciar={reiniciar} score={score} />}
     </div>
   );
 }
