@@ -4,6 +4,7 @@ import { listaDePalavras } from './data/palavras';
 import Telainicial from './components/Telainicial';
 import Jogo from './components/Jogo';
 import GameOver from './components/GameOver';
+// import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
 const estagios = [
   { id: 1, name: "start" },
@@ -24,14 +25,15 @@ function App() {
   const [score, setScore] = useState(0);
 
 
-  const sortPalavraEcategoria = () => {
+  const sortPalavraEcategoria = useCallback(() => {
     const categorias = Object.keys(palavras);
     const sortCategoria = categorias[Math.floor(Math.random() * categorias.length)]
     const sortPalavra = palavras[sortCategoria][Math.floor(Math.random() * palavras[sortCategoria].length)]
     return { sortCategoria, sortPalavra }
-  };
+  }, [palavras]);
 
-  const iniciarJogo = () => {
+  const iniciarJogo = useCallback(() => {
+    apagaLetras()
     const { sortCategoria, sortPalavra } = sortPalavraEcategoria()
     let letrasSeparadas = sortPalavra.split("");
     letrasSeparadas = letrasSeparadas.map((l) => l.toLowerCase())
@@ -43,7 +45,7 @@ function App() {
     setLetters(letrasSeparadas);
 
     setGameStage(estagios[1].name)
-  };
+  }, [sortPalavraEcategoria]);
 
   const verificaLetra = (letter) => {
     const normalizaLetra = letter.toLowerCase()
@@ -76,6 +78,22 @@ function App() {
       setGameStage(estagios[2].name)
     }
   }, [guesses]);
+
+  // useEffect(() => {
+  //   const letrasUnicas = [...new Set(letters)];
+  //   if (guessedLetters.length === letrasUnicas.length) {
+  //     setScore((actualScore) => actualScore += 100)
+  //     iniciarJogo();
+  //   }
+  // }, [guessedLetters, letters, iniciarJogo]);
+
+  useEffect(() => {
+    const letrasUnicas = [...new Set(letters)];
+    if (guessedLetters.length === letrasUnicas.length && gameStage === estagios[1].name) {
+      setScore((actualScore) => (actualScore += 100));
+      iniciarJogo();
+    }
+  }, [guessedLetters, letters, iniciarJogo, gameStage]);
 
   const reiniciar = () => {
     setScore(0);
