@@ -1,9 +1,12 @@
 .start {
+  border: 3px solid #FF66C4;
   display: flex;
-  /* flex-direction: column; */
-  /* border: 5px solid red; */
-  margin-top: 8%;
-  justify-content: space-between;
+  margin-top: 2%;
+  justify-content: center;
+  height: 90%;
+  width: 80%;
+  padding: 1.5em;
+  border-radius: 25px;
 }
 
 .start h1 {
@@ -17,6 +20,31 @@
 
 .start-square {
   background-color: #292828;
-  height: 80%;
+  height: 90%;
+  width: 70%;
   border-radius: 15px;
+}
+
+.start img {
+  width: 40%;
+}
+
+@media screen and (max-width: 768px) {
+ .start{
+   margin-top: 50%;
+   margin-top: 30%;
+ }
+
+ .start h1 {
+  font-size: 1.5em;
+}
+
+ .start img {
+   width: 80%;
+ }
+
+ .start-square {
+  height: 100%;
+}
+
 }

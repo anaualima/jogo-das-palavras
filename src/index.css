@@ -9,16 +9,16 @@ body{
   margin: 0;
   padding: 0;
   color: #f8f8ff;
-  background: rgb(10, 126, 62);
+  background: rgb(126, 10, 120) 0%;
   background: linear-gradient(
     180deg,
-    rgb(10, 126, 62) 0%,
+    rgb(126, 10, 120) 0%,
     rgba(0, 0, 0, 1) 100%
   );
 }
 
 button {
-  background-color: #0b5a16;
+  background-color: #7e1175;
   color: #fff;
   padding: 0 45px;
   border: 2px solid #fff;
@@ -32,5 +32,5 @@ button {
 }
 
 button:hover {
-  background: #0b8307;
+  background: #af0a94;
 }
