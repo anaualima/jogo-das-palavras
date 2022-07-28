@@ -6,7 +6,7 @@ const GameOver = ({ reiniciar, score }) => {
     <div>
       <h1>Game Over</h1>
       <h2>Sua pontuação foi: <span>{score}</span></h2>
-      <button onClick={reiniciar}>Reninicar Jogo</button>
+      <button onClick={reiniciar}>Reiniciar Jogo</button>
     </div>
   )
 }

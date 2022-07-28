@@ -37,8 +37,6 @@ function App() {
     const { sortCategoria, sortPalavra } = sortPalavraEcategoria()
     let letrasSeparadas = sortPalavra.split("");
     letrasSeparadas = letrasSeparadas.map((l) => l.toLowerCase())
-    console.log(sortCategoria, sortPalavra);
-    console.log(letrasSeparadas);
 
     setPickedWord(sortPalavra);
     setPickedcategory(sortCategoria);
@@ -78,14 +76,6 @@ function App() {
       setGameStage(estagios[2].name)
     }
   }, [guesses]);
-
-  // useEffect(() => {
-  //   const letrasUnicas = [...new Set(letters)];
-  //   if (guessedLetters.length === letrasUnicas.length) {
-  //     setScore((actualScore) => actualScore += 100)
-  //     iniciarJogo();
-  //   }
-  // }, [guessedLetters, letters, iniciarJogo]);
 
   useEffect(() => {
     const letrasUnicas = [...new Set(letters)];
